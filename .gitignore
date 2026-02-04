@@ -18,3 +18,8 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> kocal/oxc-bundle ###
+/bin/oxfmt*
+/bin/oxlint*
+###< kocal/oxc-bundle ###

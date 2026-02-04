@@ -35,6 +35,9 @@
             "migrations/.gitignore"
         ]
     },
+    "kocal/oxc-bundle": {
+        "version": "v1.0.0"
+    },
     "phpunit/phpunit": {
         "version": "12.5",
         "recipe": {
