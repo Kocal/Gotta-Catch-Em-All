@@ -1,4 +1,3 @@
-
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -18,3 +17,12 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> kocal/oxc-bundle ###
+/bin/oxfmt*
+/bin/oxlint*
+###< kocal/oxc-bundle ###
+
+###> deptrac/deptrac ###
+/.deptrac.cache
+###< deptrac/deptrac ###
