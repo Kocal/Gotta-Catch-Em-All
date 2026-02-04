@@ -112,6 +112,7 @@
         "symfony/maker-bundle": "^1.0",
         "symfony/stopwatch": "8.0.*",
         "symfony/web-profiler-bundle": "8.0.*",
-        "symplify/easy-coding-standard": "^13.0"
+        "symplify/easy-coding-standard": "^13.0",
+        "vincentlanglet/twig-cs-fixer": "^3.13"
     }
 }
