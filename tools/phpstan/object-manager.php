@@ -12,6 +12,7 @@ use Symfony\Component\Dotenv\Dotenv;
 
 new Dotenv()->bootEnv(__DIR__ . '/../../.env');
 
+// @phpstan-ignore-next-line argument.type
 $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
 $kernel->boot();
 
