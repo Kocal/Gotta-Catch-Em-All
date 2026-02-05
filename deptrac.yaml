@@ -4,27 +4,56 @@ deptrac:
     exclude_files:
         - '#.*test.*#'
     layers:
-        -
-            name: Controller
-            collectors:
-                -
-                    type: classLike
-                    value: .*Controller.*
-        -
-            name: Repository
-            collectors:
-                -
-                    type: classLike
-                    value: .*Repository.*
-        -
-            name: Service
-            collectors:
-                -
-                    type: classLike
-                    value: .*Service.*
+        # Application
+        -   name: App/Controller
+            collectors: [ { type: classLike, value: '^App\\Controller.*' } ]
+        -   name: App/Doctrine/DBAL/Types
+            collectors: [ { type: classLike, value: '^App\\Doctrine\\DBAL\\Types\\.*' } ]
+        -   name: App/Entity
+            collectors: [ { type: classLike, value: '^App\\Entity.*' } ]
+        -   name: App/Enum
+            collectors: [ { type: classLike, value: '^App\\Enum.*' } ]
+        -   name: App/Repository
+            collectors: [ { type: classLike, value: '^App\\Repository.*' } ]
+        -   name: App/Service
+            collectors: [ { type: classLike, value: '^App\\Service.*' } ]
+        -   name: App/ValueObject
+            collectors: [ { type: classLike, value: '^App\\ValueObject.*' } ]
+
+        # Vendors
+        -   name: Doctrine/Bundle
+            collectors: [ { type: classLike, value: '^Doctrine\\Bundle\\.*' } ]
+        -   name: Doctrine/DBAL
+            collectors: [ { type: classLike, value: '^Doctrine\\DBAL\\.*' } ]
+        -   name: Doctrine/ORM
+            collectors: [ { type: classLike, value: '^Doctrine\\ORM\\.*' } ]
+        -   name: Doctrine/Persistence
+            collectors: [ { type: classLike, value: '^Doctrine\\Persistence\\.*' } ]
+        -   name: Symfony/Component/Clock
+            collectors: [ { type: classLike, value: '^Symfony\\Component\\Clock\\' } ]
+        -   name: Symfony/Component/Uid
+            collectors: [ { type: classLike, value: '^Symfony\\Component\\Uid\\.*' } ]
+        -   name: Symfony/Component/Security
+            collectors: [ { type: classLike, value: '^Symfony\\Component\\Security\\.*' } ]
     ruleset:
-        Controller:
-            - Service
-        Service:
-            - Repository
-        Repository:
+        App/Controller:
+            - App/Service
+        App/Doctrine/DBAL/Types:
+            - App/ValueObject
+            - Doctrine/DBAL
+        App/Service:
+            - App/Repository
+        App/Repository:
+            - App/Entity
+            - Doctrine/Bundle
+            - Doctrine/ORM
+            - Doctrine/Persistence
+        App/ValueObject:
+            - Symfony/Component/Uid
+        App/Entity:
+            - App/Doctrine/DBAL/Types
+            - App/Enum
+            - App/ValueObject
+            - Doctrine/ORM
+            - Symfony/Component/Clock
+            - Symfony/Component/Security
