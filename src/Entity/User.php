@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use App\Doctrine\DBAL\Types\UserIdType;
+use App\ValueObject\Id\UserId;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Entity()]
+#[ORM\Table(name: 'app_user')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'uuid', unique: true)]
-    public private(set) Uuid $id;
+    #[ORM\Column(type: UserIdType::NAME, unique: true)]
+    public private(set) UserId $id;
 
     /**
      * @var non-empty-string
@@ -63,7 +64,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public static function create(string $username, string $password, array $roles): self
     {
         $self = new self();
-        $self->id = Uuid::v7();
+        $self->id = UserId::generate();
         $self->username = $username;
         $self->password = $password;
         $self->roles = $roles;

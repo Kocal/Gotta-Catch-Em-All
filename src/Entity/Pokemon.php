@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Doctrine\DBAL\Types\PokemonIdType;
 use App\Enum\PokemonGame;
-use App\Repository\PokemonRepository;
+use App\ValueObject\Id\PokemonId;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PokemonRepository::class)]
+#[ORM\Entity]
 class Pokemon
 {
     #[ORM\Id]
-    #[ORM\Column(name: 'id', options: [
-        'unsigned' => true,
-    ])]
-    public private(set) int $id;
+    #[ORM\Column(name: 'id', type: PokemonIdType::NAME, unique: true)]
+    public private(set) PokemonId $id;
 
     /**
      * @var non-empty-string
@@ -34,7 +33,7 @@ class Pokemon
      * @param list<PokemonGame> $catchableInGames
      */
     public static function create(
-        int $id,
+        PokemonId $id,
         string $name,
         array $catchableInGames
     ): self {

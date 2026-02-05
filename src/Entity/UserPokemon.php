@@ -4,25 +4,26 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Repository\UserPokemonRepository;
+use App\ValueObject\Id\PokemonId;
+use App\ValueObject\Id\UserId;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Clock\DatePoint;
 
-#[ORM\Entity(repositoryClass: UserPokemonRepository::class)]
+#[ORM\Entity()]
 class UserPokemon
 {
     #[ORM\Id]
     #[ORM\Column]
-    private(set) int $userId;
+    public private(set) UserId $userId;
 
     #[ORM\Id]
     #[ORM\Column]
-    private(set) int $pokemonId;
+    public private(set) PokemonId $pokemonId;
 
     #[ORM\Column]
     private DatePoint $createdAt;
 
-    public static function create(int $userId, int $pokemonId): self
+    public static function create(UserId $userId, PokemonId $pokemonId): self
     {
         $self = new self();
         $self->userId = $userId;
