@@ -21,6 +21,8 @@ deptrac:
             collectors: [ { type: classLike, value: '^App\\ValueObject.*' } ]
 
         # Vendors
+        -   name: Webmozart/Assert
+            collectors: [ { type: classLike, value: '^Webmozart\\Assert\\.*' } ]
         -   name: Doctrine/Bundle
             collectors: [ { type: classLike, value: '^Doctrine\\Bundle\\.*' } ]
         -   name: Doctrine/DBAL
@@ -31,10 +33,12 @@ deptrac:
             collectors: [ { type: classLike, value: '^Doctrine\\Persistence\\.*' } ]
         -   name: Symfony/Component/Clock
             collectors: [ { type: classLike, value: '^Symfony\\Component\\Clock\\' } ]
-        -   name: Symfony/Component/Uid
-            collectors: [ { type: classLike, value: '^Symfony\\Component\\Uid\\.*' } ]
+        -   name: Symfony/Component/PasswordHasher
+            collectors: [ { type: classLike, value: '^Symfony\\Component\\PasswordHasher\\.*' } ]
         -   name: Symfony/Component/Security
             collectors: [ { type: classLike, value: '^Symfony\\Component\\Security\\.*' } ]
+        -   name: Symfony/Component/Uid
+            collectors: [ { type: classLike, value: '^Symfony\\Component\\Uid\\.*' } ]
     ruleset:
         App/Controller:
             - App/Service
@@ -45,11 +49,14 @@ deptrac:
             - App/Repository
         App/Repository:
             - App/Entity
+            - App/ValueObject
             - Doctrine/Bundle
             - Doctrine/ORM
             - Doctrine/Persistence
         App/ValueObject:
             - Symfony/Component/Uid
+            - Symfony/Component/PasswordHasher
+            - Webmozart/Assert
         App/Entity:
             - App/Doctrine/DBAL/Types
             - App/Enum

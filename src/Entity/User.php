@@ -30,12 +30,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     public private(set) array $roles {
-        get {
-            if (! in_array('ROLE_USER', $this->roles, true)) {
-                $this->roles[] = 'ROLE_USER';
+        set(array $value) {
+            if (! in_array('ROLE_USER', $value, true)) {
+                $value[] = 'ROLE_USER';
             }
 
-            return $this->roles;
+            $this->roles = $value;
         }
     }
 

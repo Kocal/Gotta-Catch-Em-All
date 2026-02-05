@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-class UserRepository
+use App\ValueObject\Username;
+
+interface UserRepository
 {
+    public function hasUserWithUsername(Username $username): bool;
 }
