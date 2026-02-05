@@ -23,6 +23,10 @@ deptrac:
             collectors: [ { type: classLike, value: '^Doctrine\\ORM\\.*' } ]
         -   name: Doctrine/Persistence
             collectors: [ { type: classLike, value: '^Doctrine\\Persistence\\.*' } ]
+        -   name: Symfony/Component/Uid
+            collectors: [ { type: classLike, value: '^Symfony\\Component\\Uid\\.*' } ]
+        -   name: Symfony/Component/Security
+            collectors: [ { type: classLike, value: '^Symfony\\Component\\Security\\.*' } ]
     ruleset:
         Controller:
             - Service
@@ -37,3 +41,5 @@ deptrac:
             - Enum
             - Repository
             - Doctrine/ORM
+            - Symfony/Component/Uid
+            - Symfony/Component/Security
