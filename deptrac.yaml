@@ -4,27 +4,36 @@ deptrac:
     exclude_files:
         - '#.*test.*#'
     layers:
-        -
-            name: Controller
-            collectors:
-                -
-                    type: classLike
-                    value: .*Controller.*
-        -
-            name: Repository
-            collectors:
-                -
-                    type: classLike
-                    value: .*Repository.*
-        -
-            name: Service
-            collectors:
-                -
-                    type: classLike
-                    value: .*Service.*
+        # Application
+        -   name: Controller
+            collectors: [ { type: classLike, value: '^App\\Controller.*' } ]
+        -   name: Entity
+            collectors: [ { type: classLike, value: '^App\\Entity.*' } ]
+        -   name: Enum
+            collectors: [ { type: classLike, value: '^App\\Enum.*' } ]
+        -   name: Repository
+            collectors: [ { type: classLike, value: '^App\\Repository.*' } ]
+        -   name: Service
+            collectors: [ { type: classLike, value: '^App\\Service.*' } ]
+
+        # Vendors
+        -   name: Doctrine/Bundle
+            collectors: [ { type: classLike, value: '^Doctrine\\Bundle\\.*' } ]
+        -   name: Doctrine/ORM
+            collectors: [ { type: classLike, value: '^Doctrine\\ORM\\.*' } ]
+        -   name: Doctrine/Persistence
+            collectors: [ { type: classLike, value: '^Doctrine\\Persistence\\.*' } ]
     ruleset:
         Controller:
             - Service
         Service:
             - Repository
         Repository:
+            - Entity
+            - Doctrine/Bundle
+            - Doctrine/ORM
+            - Doctrine/Persistence
+        Entity:
+            - Enum
+            - Repository
+            - Doctrine/ORM
