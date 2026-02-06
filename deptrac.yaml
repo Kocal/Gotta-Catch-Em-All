@@ -50,6 +50,7 @@ deptrac:
         App/Repository:
             - App/Entity
             - App/ValueObject
+            - App/Enum
             - Doctrine/Bundle
             - Doctrine/ORM
             - Doctrine/Persistence
