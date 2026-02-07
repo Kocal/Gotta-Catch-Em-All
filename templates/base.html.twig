@@ -20,14 +20,14 @@
         <meta name="color-scheme" content="dark light">
         <meta name="view-transition" content="same-origin" />
     </head>
-    <body class="antialiased min-h-dvh flex flex-col bg-blue-400 text-blue-50">
+    <body class="antialiased min-h-dvh flex flex-col bg-blue-300 text-blue-50">
     {% block body %}
-        <div class="flex flex-1">
+        <div class="flex-1">
             {% block main %}{% endblock %}
         </div>
 
-        <footer class="bg-blue-500">
-            <div class="container py-2 text-center text-sm">
+        <footer class="bg-blue-400">
+            <div class=" py-2 text-center text-sm">
                 <twig:ux:icon name="lucide:copyleft" class="inline-block" />
                {{ "now"|date("Y") }} Kocal -
                 <a href="https://github.com/Kocal/Gotta-Catch-Em-All/" class="hover:underline">
