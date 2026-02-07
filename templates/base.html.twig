@@ -1,17 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale }}" dir="ltr" style="scrollbar-gutter: stable">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <title>{{ block('title') }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         {% block stylesheets %}
+            <style>
+                /* Generated through fontpie, e.g.: "pnpx fontpie assets/vendor/inter-ui/variable/InterVariable.woff2" */
+                @font-face { font-family: 'Inter Variable Fallback'; font-style: normal; font-weight: 400; src: local('Arial'); ascent-override: 89.79%; descent-override: 22.36%; line-gap-override: 0.00%; size-adjust: 107.89%; }
+                @font-face { font-family: 'Inter Variable Fallback'; font-style: normal; font-weight: 600; src: local('Arial Bold'); ascent-override: 97.15%; descent-override: 24.19%; line-gap-override: 0.00%; size-adjust: 99.72%; }
+            </style>
         {% endblock %}
 
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
+
+        <meta name="color-scheme" content="dark light">
+        <meta name="view-transition" content="same-origin" />
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="antialiased min-h-dvh flex flex-col bg-blue-300 text-blue-50">
+    {% block body %}
+        <div class="flex-1">
+            {% block main %}{% endblock %}
+        </div>
+
+        <footer class="bg-blue-400">
+            <div class=" py-2 text-center text-sm">
+                <twig:ux:icon name="lucide:copyleft" class="inline-block" />
+               {{ "now"|date("Y") }} Kocal -
+                <a href="https://github.com/Kocal/Gotta-Catch-Em-All/" class="hover:underline">
+                    <twig:ux:icon name="mdi:github" class="inline-block" />
+                    See on GitHub
+                </a>
+            </div>
+        </footer>
+    {% endblock %}
     </body>
 </html>

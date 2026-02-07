@@ -1,0 +1,15 @@
+<div{{ attributes.defaults({
+    class: 'flex flex-col relative h-full',
+}) }}>
+    <img
+        src="{{ asset('images/pokemon-box-bg.png') }}"
+        alt="Pokémon Box Background"
+        class="w-full object-cover absolute -z-1 pointer-events-none select-none"
+    />
+    <div class="text-center text-white font-mono font-mono-shadow-[2] text-xs py-2.5 select-none">
+        {% block title %}{% endblock %}
+    </div>
+    <div class="grid grid-cols-6 p-2 gap-y-1.5">
+        {% block content %}{% endblock %}
+    </div>
+</div>

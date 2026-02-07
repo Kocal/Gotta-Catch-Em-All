@@ -1,0 +1,23 @@
+{% set pokemons = this.getPokemons() %}
+<div{{ attributes.defaults({
+    class: 'grid grid-cols-5 auto-rows-min gap-2 gap-y-4',
+}) }}>
+    {% for boxIndex in 1..boxesCount %}
+        <twig:PokemonBox>
+            <twig:block name="title">
+                {{ pokemonPerBox * (boxIndex - 1) + 1 }} - {{ pokemonPerBox * boxIndex }}
+                ({{ boxIndex }} / {{ boxesCount }})
+            </twig:block>
+            <twig:block name="content">
+                {% for pokemon in pokemons|slice(pokemonPerBox * (boxIndex - 1), pokemonPerBox) %}
+                    <img
+                        src="{{ asset('images/pokemon/' ~ pokemon.id ~ '.png') }}"
+                        alt="{{ pokemon.name }}"
+                        title="{{ pokemon.name }} #{{ pokemon.id }}"
+                        class="select-none"
+                    />
+                {% endfor %}
+            </twig:block>
+        </twig:PokemonBox>
+    {% endfor %}
+</div>

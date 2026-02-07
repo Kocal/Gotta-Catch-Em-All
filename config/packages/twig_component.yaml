@@ -1,0 +1,11 @@
+twig_component:
+    anonymous_template_directory: 'components/'
+    defaults:
+        # Namespace & directory for components
+        App\Application\Twig\Components\: 'components/'
+
+when@dev:
+    twig_component:
+        profiler:
+            enabled: true
+            collect_components: false
