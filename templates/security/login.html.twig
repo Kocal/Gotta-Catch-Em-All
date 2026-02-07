@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block main %}
+<div class="mt-20">
+    <div class="bg-white p-6 rounded-lg shadow-lg max-w-md text-blue-900 mx-auto">
+        <h1 class="text-3xl">Login</h1>
+        <form method="post">
+            {% if error %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+                </div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.userIdentifier }}, <a href="{{ logout_path() }}">Logout</a>
+                </div>
+            {% endif %}
+
+            <div class="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div class="col-span-full">
+                    <label for="inputUsername" class="block font-bold">Username</label>
+                    <input class="mt-2 w-full" type="text" value="{{ last_username }}" name="username" id="inputUsername" autocomplete="username" required autofocus>
+                </div>
+                <div class="col-span-full">
+                    <label for="inputPassword" class="block font-bold">Password</label>
+                    <input class="mt-2 w-full" type="password" name="password" id="inputPassword" autocomplete="current-password" required>
+                </div>
+
+                <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+            </div>
+
+            <button class="mt-6 w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600" type="submit">
+                Sign in
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

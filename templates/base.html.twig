@@ -27,13 +27,28 @@
         </div>
 
         <footer class="bg-blue-400">
-            <div class=" py-2 text-center text-sm">
+            <div class="py-2 text-center text-sm">
                 <twig:ux:icon name="lucide:copyleft" class="inline-block" />
                {{ "now"|date("Y") }} Kocal -
                 <a href="https://github.com/Kocal/Gotta-Catch-Em-All/" class="hover:underline">
                     <twig:ux:icon name="mdi:github" class="inline-block" />
                     See on GitHub
                 </a>
+
+                {% if app.user %}
+                    <span class="mx-2">|</span>
+                    <a href="{{ path('app_logout') }}" class="hover:underline">
+                        <twig:ux:icon name="lucide:log-out" class="inline-block" />
+                        Logout
+                    </a>
+                {% else %}
+                    <span class="mx-2">|</span>
+                    <a href="{{ path('app_login') }}" class="hover:underline">
+                        <twig:ux:icon name="lucide:log-in" class="inline-block" />
+                        Login
+                    </a>
+                {% endif %}
+
             </div>
         </footer>
     {% endblock %}
