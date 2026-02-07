@@ -9,8 +9,8 @@ doctrine:
         profiling_collect_backtrace: '%kernel.debug%'
 
         types:
-            pokemon_id: App\Doctrine\DBAL\Types\PokemonIdType
-            user_id: App\Doctrine\DBAL\Types\UserIdType
+            pokemon_id: App\Infrastructure\Doctrine\DBAL\Types\PokemonIdType
+            user_id: App\Infrastructure\Doctrine\DBAL\Types\UserIdType
 
     orm:
         validate_xml_mapping: true
@@ -20,8 +20,8 @@ doctrine:
             App:
                 type: attribute
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
+                dir: '%kernel.project_dir%/src/Domain/Data/Model'
+                prefix: 'App\Domain\Data\Model'
                 alias: App
         controller_resolver:
             auto_mapping: false
@@ -34,7 +34,7 @@ when@test:
 
 when@prod:
     doctrine:
-        orm:
+        ormInfrastructure\:
             query_cache_driver:
                 type: pool
                 pool: doctrine.system_cache_pool
