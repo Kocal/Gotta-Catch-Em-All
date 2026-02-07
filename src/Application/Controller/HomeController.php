@@ -13,8 +13,7 @@ final readonly class HomeController
 {
     public function __construct(
         private \Twig\Environment $twig,
-    )
-    {
+    ) {
     }
 
     #[Route('/', name: 'home')]
