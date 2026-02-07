@@ -25,4 +25,15 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    'inter-ui' => [
+        'version' => '4.1.1',
+    ],
+    'inter-ui/inter.min.css' => [
+        'version' => '4.1.1',
+        'type' => 'css',
+    ],
+    'inter-ui/inter-variable.css' => [
+        'version' => '4.1.1',
+        'type' => 'css',
+    ],
 ];

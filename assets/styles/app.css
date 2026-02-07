@@ -1,3 +1,26 @@
-body {
-    background-color: skyblue;
+@import "tailwindcss";
+@source not "../../public";
+
+@theme {
+    --font-sans: "Inter var", "Inter Variable Fallback", "ui-sans-serif", "system-ui", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI", "Symbol", "Noto Color Emoji";
+    --font-sans--font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+@layer base {
+    @font-face {
+        font-family: Inter var;
+        font-weight: 100 900;
+        font-display: swap;
+        font-style: normal;
+        font-named-instance: "Regular";
+        src: url('../vendor/inter-ui/variable/InterVariable.woff2') format("woff2")
+    }
+    @font-face {
+        font-family: Inter var;
+        font-weight: 100 900;
+        font-display: swap;
+        font-style: italic;
+        font-named-instance: "Regular";
+        src: url('../vendor/inter-ui/variable/InterVariable-Italic.woff2') format("woff2")
+    }
 }
