@@ -1,67 +1,87 @@
 deptrac:
+    cache_file: tools/.cache/deptrac.cache
+
     paths:
         - ./src
-    exclude_files:
-        - '#.*test.*#'
-    layers:
-        # Application
-        -   name: App/Controller
-            collectors: [ { type: classLike, value: '^App\\Controller.*' } ]
-        -   name: App/Doctrine/DBAL/Types
-            collectors: [ { type: classLike, value: '^App\\Doctrine\\DBAL\\Types\\.*' } ]
-        -   name: App/Entity
-            collectors: [ { type: classLike, value: '^App\\Entity.*' } ]
-        -   name: App/Enum
-            collectors: [ { type: classLike, value: '^App\\Enum.*' } ]
-        -   name: App/Repository
-            collectors: [ { type: classLike, value: '^App\\Repository.*' } ]
-        -   name: App/Service
-            collectors: [ { type: classLike, value: '^App\\Service.*' } ]
-        -   name: App/ValueObject
-            collectors: [ { type: classLike, value: '^App\\ValueObject.*' } ]
 
-        # Vendors
-        -   name: Webmozart/Assert
-            collectors: [ { type: classLike, value: '^Webmozart\\Assert\\.*' } ]
-        -   name: Doctrine/Bundle
-            collectors: [ { type: classLike, value: '^Doctrine\\Bundle\\.*' } ]
-        -   name: Doctrine/DBAL
-            collectors: [ { type: classLike, value: '^Doctrine\\DBAL\\.*' } ]
-        -   name: Doctrine/ORM
-            collectors: [ { type: classLike, value: '^Doctrine\\ORM\\.*' } ]
-        -   name: Doctrine/Persistence
-            collectors: [ { type: classLike, value: '^Doctrine\\Persistence\\.*' } ]
-        -   name: Symfony/Component/Clock
-            collectors: [ { type: classLike, value: '^Symfony\\Component\\Clock\\' } ]
-        -   name: Symfony/Component/PasswordHasher
-            collectors: [ { type: classLike, value: '^Symfony\\Component\\PasswordHasher\\.*' } ]
-        -   name: Symfony/Component/Security
-            collectors: [ { type: classLike, value: '^Symfony\\Component\\Security\\.*' } ]
-        -   name: Symfony/Component/Uid
-            collectors: [ { type: classLike, value: '^Symfony\\Component\\Uid\\.*' } ]
+    layers:
+        - name: App/Domain
+          collectors:
+              - { type: classLike, value: ^App\\Domain\\ }
+
+        - name: App/Application
+          collectors:
+              - { type: classLike, value: ^App\\Application\\ }
+
+        - name: App/Infrastructure
+          collectors:
+              - { type: classLike, value: ^App\\Infrastructure\\ }
+
+        - name: Vendor/Doctrine/ORM/Mapping
+          collectors:
+              - { type: classLike, value: ^Doctrine\\ORM\\Mapping }
+
+        - name: Vendor/Doctrine/DBAL/Types
+          collectors:
+              - { type: classLike, value: ^Doctrine\\DBAL\\Types }
+
+        - name: Vendor/Symfony/Validator/Constraints
+          collectors:
+              - { type: classLike, value: ^Symfony\\Component\\Validator\\Constraints }
+
+        - name: Vendor/Symfony/Clock/DatePoint
+          collectors:
+              - { type: classLike, value: ^Symfony\\Component\\Clock\\DatePoint }
+
+        - name: Vendor/Symfony/Translation/TranslatableMessage
+          collectors:
+              - { type: classLike, value: ^Symfony\\Component\\Translation\\TranslatableMessage }
+
+        - name: Vendor/Symfony/Uid/Uuid
+          collectors:
+              - { type: classLike, value: ^Symfony\\Component\\Uid\\Uuid }
+
+        - name: Vendor/Webmozart/Assert/Assert
+          collectors:
+              - { type: classLike, value: ^Webmozart\\Assert\\Assert }
+
+        - name: Vendor
+          collectors:
+              - type: bool
+                must:
+                    - { type: classLike, value: ^(?!App\\) }
+                must_not:
+                    - { type: classLike, value: '^[a-zA-Z]+$' } # native PHP classes
+                    - { type: layer, value: Vendor/Doctrine/ORM/Mapping }
+                    - { type: layer, value: Vendor/Doctrine/DBAL/Types }
+                    - { type: layer, value: Vendor/Symfony/Validator/Constraints }
+                    - { type: layer, value: Vendor/Symfony/Clock/DatePoint }
+                    - { type: layer, value: Vendor/Symfony/Translation/TranslatableMessage }
+                    - { type: layer, value: Vendor/Symfony/Uid/Uuid }
+                    - { type: layer, value: Vendor/Webmozart/Assert/Assert }
+
     ruleset:
-        App/Controller:
-            - App/Service
-        App/Doctrine/DBAL/Types:
-            - App/ValueObject
-            - Doctrine/DBAL
-        App/Service:
-            - App/Repository
-        App/Repository:
-            - App/Entity
-            - App/ValueObject
-            - App/Enum
-            - Doctrine/Bundle
-            - Doctrine/ORM
-            - Doctrine/Persistence
-        App/ValueObject:
-            - Symfony/Component/Uid
-            - Symfony/Component/PasswordHasher
-            - Webmozart/Assert
-        App/Entity:
-            - App/Doctrine/DBAL/Types
-            - App/Enum
-            - App/ValueObject
-            - Doctrine/ORM
-            - Symfony/Component/Clock
-            - Symfony/Component/Security
+        App/Domain:
+            - Vendor/Doctrine/ORM/Mapping
+            - Vendor/Doctrine/DBAL/Types
+            - Vendor/Symfony/Validator/Constraints
+            - Vendor/Symfony/Clock/DatePoint
+            - Vendor/Symfony/Translation/TranslatableMessage
+            - Vendor/Symfony/Uid/Uuid
+            - Vendor/Webmozart/Assert/Assert
+        App/Application:
+            - App/Domain
+            - Vendor
+        App/Infrastructure:
+            - App/Domain
+            - App/Application
+            - Vendor
+            - Vendor/Doctrine/DBAL/Types
+
+    skip_violations:
+        App\Domain\Data\Model\User:
+            - Symfony\Component\Security\Core\User\UserInterface
+            - Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
+
+        App\Domain\Data\ValueObject\PlainPassword:
+            - Symfony\Component\PasswordHasher\PasswordHasherInterface
