@@ -13,14 +13,18 @@
                 </twig:block>
                 <twig:block name="content">
                     {% for pokemon in pokemons|slice(pokemonPerBox * (boxIndex - 1), pokemonPerBox) %}
-                        <a href="{{ app.user ? path('app_toggle_pokemon_caught', {pokemonId: pokemon.id}) : '#' }}">
+                        {% if app.user %}
+                            <a href="{{ path('app_toggle_pokemon_caught', {pokemonId: pokemon.id}) }}">
+                        {% endif %}
                             <img
                                 src="{{ asset('images/pokemon/' ~ pokemon.id ~ '.png') }}"
                                 alt="{{ pokemon.name }}"
                                 title="{{ pokemon.name }} #{{ pokemon.id }} ({{ pokemon.catchableInGames|map(g => g.displayName)|join(' / ') }})"
                                 class="select-none {{ caughtPokemons[pokemon.id.toInt] is defined ? '' : 'grayscale-100' }} transition-opacity duration-300"
                             />
-                        </a>
+                        {% if app.user %}
+                            </a>
+                        {% endif %}
                     {% endfor %}
                 </twig:block>
             </twig:PokemonBox>
