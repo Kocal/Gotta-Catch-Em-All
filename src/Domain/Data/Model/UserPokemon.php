@@ -20,7 +20,7 @@ class UserPokemon
     #[ORM\Column(type: 'pokemon_id')]
     public private(set) PokemonId $pokemonId;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'date_point')]
     private DatePoint $createdAt;
 
     public static function create(UserId $userId, PokemonId $pokemonId): self

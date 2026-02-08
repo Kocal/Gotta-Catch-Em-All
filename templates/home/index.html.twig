@@ -4,7 +4,8 @@
 
 {% block main %}
     <div class="flex justify-center items-center flex-col ">
-        <h1 class="font-mono font-mono-shadow-[4] text-3xl font-bold my-6 ">Gotta Catch 'Em All (3rd Gen)</h1>
-        <twig:App />
+        <turbo-frame id="app">
+            <twig:App user="{{ app.user }}" />
+        </turbo-frame>
     </div>
 {% endblock %}

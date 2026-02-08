@@ -28,7 +28,7 @@ final class PokemonIdType extends Type
         }
 
         if ($value instanceof PokemonId) {
-            return $value->id();
+            return $value->toInt();
         }
 
         throw InvalidType::new($value, self::class, ['null', PokemonId::class]);

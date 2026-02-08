@@ -1,23 +1,31 @@
 {% set pokemons = this.getPokemons() %}
-<div{{ attributes.defaults({
-    class: 'grid grid-cols-5 auto-rows-min gap-2 gap-y-4',
-}) }}>
-    {% for boxIndex in 1..boxesCount %}
-        <twig:PokemonBox>
-            <twig:block name="title">
-                {{ pokemonPerBox * (boxIndex - 1) + 1 }} - {{ pokemonPerBox * boxIndex }}
-                ({{ boxIndex }} / {{ boxesCount }})
-            </twig:block>
-            <twig:block name="content">
-                {% for pokemon in pokemons|slice(pokemonPerBox * (boxIndex - 1), pokemonPerBox) %}
-                    <img
-                        src="{{ asset('images/pokemon/' ~ pokemon.id ~ '.png') }}"
-                        alt="{{ pokemon.name }}"
-                        title="{{ pokemon.name }} #{{ pokemon.id }}"
-                        class="select-none"
-                    />
-                {% endfor %}
-            </twig:block>
-        </twig:PokemonBox>
-    {% endfor %}
+{% set caughtPokemons = this.getCaughtPokemons() %}
+<div{{ attributes }}>
+    <h1 class="font-mono font-mono-shadow-[4] text-3xl text-center  font-bold my-6">
+        Gotta Catch 'Em All (3rd Gen) ({{ caughtPokemons|length }} / {{ pokemons|length }})
+    </h1>
+    <div class="grid grid-cols-5 auto-rows-min gap-2 gap-y-4">
+        {% for boxIndex in 1..boxesCount %}
+            <twig:PokemonBox>
+                <twig:block name="title">
+                    {{ pokemonPerBox * (boxIndex - 1) + 1 }} - {{ pokemonPerBox * boxIndex }}
+                    ({{ boxIndex }} / {{ boxesCount }})
+                </twig:block>
+                <twig:block name="content">
+                    {% for pokemon in pokemons|slice(pokemonPerBox * (boxIndex - 1), pokemonPerBox) %}
+                        <a
+                            href="{{ path('app_toggle_pokemon_caught', {pokemonId: pokemon.id}) }}"
+                        >
+                            <img
+                                src="{{ asset('images/pokemon/' ~ pokemon.id ~ '.png') }}"
+                                alt="{{ pokemon.name }}"
+                                title="{{ pokemon.name }} #{{ pokemon.id }} ({{ pokemon.catchableInGames|map(g => g.displayName)|join(' / ') }})"
+                                class="select-none {{ caughtPokemons[pokemon.id.toInt] is defined ? '' : 'grayscale-100' }} transition-opacity duration-300"
+                            />
+                        </a>
+                    {% endfor %}
+                </twig:block>
+            </twig:PokemonBox>
+        {% endfor %}
+    </div>
 </div>
