@@ -13,9 +13,7 @@
                 </twig:block>
                 <twig:block name="content">
                     {% for pokemon in pokemons|slice(pokemonPerBox * (boxIndex - 1), pokemonPerBox) %}
-                        <a
-                            href="{{ path('app_toggle_pokemon_caught', {pokemonId: pokemon.id}) }}"
-                        >
+                        <a href="{{ app.user ? path('app_toggle_pokemon_caught', {pokemonId: pokemon.id}) : '#' }}">
                             <img
                                 src="{{ asset('images/pokemon/' ~ pokemon.id ~ '.png') }}"
                                 alt="{{ pokemon.name }}"
