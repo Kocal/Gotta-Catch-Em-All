@@ -11,4 +11,15 @@ enum PokemonGame: string
     case Ruby = 'ruby';
     case Sapphire = 'sapphire';
     case Emerald = 'emerald';
+
+    public function getDisplayName(): string
+    {
+        return match ($this) {
+            self::RedFire => 'RF',
+            self::GreenLeaf => 'GL',
+            self::Ruby => 'R',
+            self::Sapphire => 'S',
+            self::Emerald => 'E',
+        };
+    }
 }

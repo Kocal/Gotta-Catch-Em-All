@@ -26,7 +26,7 @@ trait IdTrait
         return $self;
     }
 
-    public function id(): int
+    public function toInt(): int
     {
         return $this->id;
     }

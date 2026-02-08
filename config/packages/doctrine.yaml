@@ -34,7 +34,7 @@ when@test:
 
 when@prod:
     doctrine:
-        ormInfrastructure\:
+        orm:
             query_cache_driver:
                 type: pool
                 pool: doctrine.system_cache_pool

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Doctrine\Repository;
 
 use App\Domain\Data\Model\User;
+use App\Domain\Data\ValueObject\Id\UserId;
 use App\Domain\Data\ValueObject\Username;
 use App\Domain\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,5 +29,10 @@ final readonly class UserDoctrineRepository implements UserRepository
         return $this->repository->count([
             'username' => $username,
         ]) > 0;
+    }
+
+    public function findById(UserId $value): ?User
+    {
+        return $this->repository->find($value);
     }
 }
