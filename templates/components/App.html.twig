@@ -1,10 +1,10 @@
 {% set pokemons = this.getPokemons() %}
 {% set caughtPokemons = this.getCaughtPokemons() %}
 <div{{ attributes }}>
-    <h1 class="font-mono font-mono-shadow-[4] text-3xl text-center  font-bold my-6">
+    <h1 class="font-mono font-mono-shadow-[2] md:font-mono-shadow-[4] md:text-3xl text-center  font-bold my-6">
         Gotta Catch 'Em All (3rd Gen) ({{ caughtPokemons|length }} / {{ pokemons|length }})
     </h1>
-    <div class="grid grid-cols-5 auto-rows-min gap-2 gap-y-4">
+    <div class="grid md:grid-cols-5 auto-rows-fr gap-2 gap-y-4">
         {% for boxIndex in 1..boxesCount %}
             <twig:PokemonBox>
                 <twig:block name="title">
@@ -20,7 +20,7 @@
                                 src="{{ asset('images/pokemon/' ~ pokemon.id ~ '.png') }}"
                                 alt="{{ pokemon.name }}"
                                 title="{{ pokemon.name }} #{{ pokemon.id }} ({{ pokemon.catchableInGames|map(g => g.displayName)|join(' / ') }})"
-                                class="select-none {{ caughtPokemons[pokemon.id.toInt] is defined ? '' : 'grayscale-100' }} transition-opacity duration-300"
+                                class="select-none {{ caughtPokemons[pokemon.id.toInt] is defined ? '' : 'grayscale-100' }} w-full place-self-center"
                             />
                         {% if app.user %}
                             </a>
