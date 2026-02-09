@@ -10,7 +10,6 @@
         "doctrine/doctrine-bundle": "^3.2",
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.6",
-        "kocal/oxc-bundle": "^1.0",
         "phpdocumentor/reflection-docblock": "^5.6",
         "phpstan/phpdoc-parser": "^2.3",
         "symfony/asset": "8.0.*",
@@ -105,6 +104,7 @@
     },
     "require-dev": {
         "deptrac/deptrac": "^4.6",
+        "kocal/oxc-bundle": "^1.0",
         "kocal/phpstan-symfony-ux": "^1.1",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-doctrine": "^2.0",

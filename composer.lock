@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "22e766c08856028009f9d4752a97099c",
+    "content-hash": "587588b11674e88b4f4d403551a80f18",
     "packages": [
         {
             "name": "composer/semver",
@@ -1262,64 +1262,6 @@
                 }
             ],
             "time": "2025-03-06T22:45:56+00:00"
-        },
-        {
-            "name": "kocal/oxc-bundle",
-            "version": "v1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Kocal/OxcBundle.git",
-                "reference": "be63345142d73a5ff5dbf1e88abbeae350d92715"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Kocal/OxcBundle/zipball/be63345142d73a5ff5dbf1e88abbeae350d92715",
-                "reference": "be63345142d73a5ff5dbf1e88abbeae350d92715",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.1",
-                "symfony/console": "^6.4|^7.0|^8.0",
-                "symfony/filesystem": "^6.4|^7.0|^8.0",
-                "symfony/http-client": "^6.4|^7.0|^8.0",
-                "symfony/process": "^6.4|^7.0|^8.0"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "^2.1.21",
-                "symfony/framework-bundle": "^6.4|^7.0|^8.0",
-                "symplify/easy-coding-standard": "12.5.22"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Kocal\\OxcBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Hugo Alliaume",
-                    "email": "hugo@alliau.me"
-                }
-            ],
-            "description": "A Symfony Bundle to easily download tools from the JavaScript Oxidation Compiler (Oxc).",
-            "keywords": [
-                "bundle",
-                "format",
-                "lint",
-                "oxc",
-                "oxfmt",
-                "oxlint",
-                "symfony"
-            ],
-            "support": {
-                "issues": "https://github.com/Kocal/OxcBundle/issues",
-                "source": "https://github.com/Kocal/OxcBundle/tree/v1.0.0"
-            },
-            "time": "2026-02-04T20:25:59+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -8278,17 +8220,75 @@
             "time": "2025-09-18T15:47:24+00:00"
         },
         {
-            "name": "kocal/phpstan-symfony-ux",
-            "version": "v1.1.0",
+            "name": "kocal/oxc-bundle",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Kocal/phpstan-symfony-ux.git",
-                "reference": "0746480622429b8b0ee2383251585213d9a87c7d"
+                "url": "https://github.com/Kocal/OxcBundle.git",
+                "reference": "be63345142d73a5ff5dbf1e88abbeae350d92715"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kocal/phpstan-symfony-ux/zipball/0746480622429b8b0ee2383251585213d9a87c7d",
-                "reference": "0746480622429b8b0ee2383251585213d9a87c7d",
+                "url": "https://api.github.com/repos/Kocal/OxcBundle/zipball/be63345142d73a5ff5dbf1e88abbeae350d92715",
+                "reference": "be63345142d73a5ff5dbf1e88abbeae350d92715",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/console": "^6.4|^7.0|^8.0",
+                "symfony/filesystem": "^6.4|^7.0|^8.0",
+                "symfony/http-client": "^6.4|^7.0|^8.0",
+                "symfony/process": "^6.4|^7.0|^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.1.21",
+                "symfony/framework-bundle": "^6.4|^7.0|^8.0",
+                "symplify/easy-coding-standard": "12.5.22"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Kocal\\OxcBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hugo Alliaume",
+                    "email": "hugo@alliau.me"
+                }
+            ],
+            "description": "A Symfony Bundle to easily download tools from the JavaScript Oxidation Compiler (Oxc).",
+            "keywords": [
+                "bundle",
+                "format",
+                "lint",
+                "oxc",
+                "oxfmt",
+                "oxlint",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/Kocal/OxcBundle/issues",
+                "source": "https://github.com/Kocal/OxcBundle/tree/v1.0.0"
+            },
+            "time": "2026-02-04T20:25:59+00:00"
+        },
+        {
+            "name": "kocal/phpstan-symfony-ux",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kocal/phpstan-symfony-ux.git",
+                "reference": "42ddbac0b31afdf867b16e70e7cb91e54950d9ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kocal/phpstan-symfony-ux/zipball/42ddbac0b31afdf867b16e70e7cb91e54950d9ea",
+                "reference": "42ddbac0b31afdf867b16e70e7cb91e54950d9ea",
                 "shasum": ""
             },
             "require": {
@@ -8310,9 +8310,6 @@
                 }
             },
             "autoload": {
-                "files": [
-                    "src/deprecated-aliases.php"
-                ],
                 "psr-4": {
                     "Kocal\\PHPStanSymfonyUX\\": "src/"
                 }
@@ -8330,9 +8327,9 @@
             "description": "PHPStan rules for Symfony UX",
             "support": {
                 "issues": "https://github.com/Kocal/phpstan-symfony-ux/issues",
-                "source": "https://github.com/Kocal/phpstan-symfony-ux/tree/v1.1.0"
+                "source": "https://github.com/Kocal/phpstan-symfony-ux/tree/v1.1.1"
             },
-            "time": "2025-12-16T00:28:25+00:00"
+            "time": "2026-02-09T21:59:52+00:00"
         },
         {
             "name": "myclabs/deep-copy",

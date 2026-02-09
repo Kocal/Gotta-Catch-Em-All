@@ -37,4 +37,12 @@ class Pokemon
 
         return $self;
     }
+
+    public function getCatchableInGamesLabel(): string
+    {
+        return implode(' / ', array_map(
+            fn (PokemonGame $game) => $game->value,
+            $this->catchableInGames
+        ));
+    }
 }

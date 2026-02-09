@@ -1,5 +1,6 @@
 {% set pokemons = this.getPokemons() %}
 {% set caughtPokemons = this.getCaughtPokemons() %}
+{% set user = app.user %}
 <div{{ attributes }}>
     <h1 class="font-mono font-mono-shadow-[2] md:font-mono-shadow-[4] md:text-3xl text-center  font-bold my-6">
         Gotta Catch 'Em All (3rd Gen) ({{ caughtPokemons|length }} / {{ pokemons|length }})
@@ -13,16 +14,16 @@
                 </twig:block>
                 <twig:block name="content">
                     {% for pokemon in pokemons|slice(pokemonPerBox * (boxIndex - 1), pokemonPerBox) %}
-                        {% if app.user %}
+                        {% if user is not null %}
                             <a href="{{ path('app_toggle_pokemon_caught', {pokemonId: pokemon.id}) }}">
                         {% endif %}
                             <img
                                 src="{{ asset('images/pokemon/' ~ pokemon.id ~ '.png') }}"
                                 alt="{{ pokemon.name }}"
-                                title="{{ pokemon.name }} #{{ pokemon.id }} ({{ pokemon.catchableInGames|map(g => g.displayName)|join(' / ') }})"
+                                title="{{ pokemon.name }} #{{ pokemon.id }} ({{ pokemon.getCatchableInGamesLabel() }})"
                                 class="select-none {{ caughtPokemons[pokemon.id.toInt] is defined ? '' : 'grayscale-100' }} w-full place-self-center"
                             />
-                        {% if app.user %}
+                        {% if user is not null %}
                             </a>
                         {% endif %}
                     {% endfor %}
