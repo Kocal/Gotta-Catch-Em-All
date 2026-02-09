@@ -15,6 +15,7 @@ return RectorConfig::configure()
         __DIR__ . '/tests',
         __DIR__ . '/tools',
     ])
+    ->withImportNames(importShortClasses: false, removeUnusedImports: true)
     ->withPhpSets()
     ->withPreparedSets(
         deadCode: true,

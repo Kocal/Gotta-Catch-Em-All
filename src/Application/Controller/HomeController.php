@@ -7,12 +7,13 @@ namespace App\Application\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
+use Twig\Environment;
 
 #[AsController]
 final readonly class HomeController
 {
     public function __construct(
-        private \Twig\Environment $twig,
+        private Environment $twig,
     ) {
     }
 

@@ -41,7 +41,7 @@ final readonly class UserPokemonDoctrineRepository implements UserPokemonReposit
             'pokemonId' => $pokemonId,
         ]);
 
-        if ($userPokemon instanceof \App\Domain\Data\Model\UserPokemon) {
+        if ($userPokemon instanceof UserPokemon) {
             $this->entityManager->remove($userPokemon);
         } else {
             $userPokemon = UserPokemon::create($userId, $pokemonId);

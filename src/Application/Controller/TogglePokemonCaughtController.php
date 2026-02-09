@@ -31,7 +31,7 @@ final readonly class TogglePokemonCaughtController
         int $pokemonId,
         #[CurrentUser]
         User $user,
-    ): \Symfony\Component\HttpFoundation\RedirectResponse {
+    ): RedirectResponse {
         $pokemonId = PokemonId::fromInt($pokemonId);
 
         $this->userPokemonRepository->toggleCaught($user->id, $pokemonId);
