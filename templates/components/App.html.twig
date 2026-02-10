@@ -14,21 +14,7 @@
                 </twig:block>
                 <twig:block name="content">
                     {% for pokemon in pokemons|slice(pokemonPerBox * (boxIndex - 1), pokemonPerBox) %}
-                        {% if user is not null %}
-                            <a
-                                href="{{ path('app_toggle_pokemon_caught', {pokemonId: pokemon.id}) }}"
-                                onclick="this.querySelector('img').classList.toggle('grayscale-100');"
-                            >
-                        {% endif %}
-                            <img
-                                src="{{ asset('images/pokemon/' ~ pokemon.id ~ '.png') }}"
-                                alt="{{ pokemon.name }}"
-                                title="{{ pokemon.name }} #{{ pokemon.id }} ({{ pokemon.getCatchableInGamesLabel() }})"
-                                class="select-none {{ caughtPokemons[pokemon.id.toInt] is defined ? '' : 'grayscale-100' }} w-full place-self-center"
-                            />
-                        {% if user is not null %}
-                            </a>
-                        {% endif %}
+                        <twig:Pokemon pokemon="{{ pokemon }}" isLogged="{{ user is not null }}" caughtPokemons="{{ caughtPokemons }}" />
                     {% endfor %}
                 </twig:block>
             </twig:PokemonBox>
