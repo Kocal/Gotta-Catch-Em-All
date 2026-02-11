@@ -24,14 +24,22 @@ final readonly class UserPokemonDoctrineRepository implements UserPokemonReposit
         $this->repository = $this->entityManager->getRepository(UserPokemon::class);
     }
 
-    public function findAllCaughtPokemonsByUserId(UserId $userId): array
+    public function findCaughtPokemonsByUser(UserId $userId): array
     {
-        $qb = $this->repository->createQueryBuilder('up', 'up.pokemonId')
-            ->where('up.userId = :userId')
-            ->setParameter('userId', $userId, 'user_id')
+        $pokemonIds = $this->entityManager->getConnection()
+            ->executeQuery(
+                'SELECT pokemon_id FROM user_pokemon WHERE user_id = :userId',
+                [
+                    'userId' => $userId,
+                ],
+                [
+                    'userId' => 'user_id',
+                ]
+            )
+            ->fetchFirstColumn()
         ;
 
-        return $qb->getQuery()->getResult();
+        return array_fill_keys($pokemonIds, true);
     }
 
     public function toggleCaught(UserId $userId, PokemonId $pokemonId): void

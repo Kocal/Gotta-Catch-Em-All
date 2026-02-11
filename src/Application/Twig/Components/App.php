@@ -6,7 +6,6 @@ namespace App\Application\Twig\Components;
 
 use App\Domain\Data\Model\Pokemon;
 use App\Domain\Data\Model\User;
-use App\Domain\Data\Model\UserPokemon;
 use App\Domain\Data\ValueObject\Id\PokemonId;
 use App\Domain\Repository\PokemonRepository;
 use App\Domain\Repository\UserPokemonRepository;
@@ -37,14 +36,14 @@ final class App
     }
 
     /**
-     * @return array<value-of<PokemonId>, UserPokemon>
+     * @return array<value-of<PokemonId>, true>
      */
-    public function getCaughtPokemons(): array
+    public function findCaughtPokemons(): array
     {
         if (! $this->user instanceof User) {
             return [];
         }
 
-        return $this->userPokemonRepository->findAllCaughtPokemonsByUserId($this->user->id);
+        return $this->userPokemonRepository->findCaughtPokemonsByUser($this->user->id);
     }
 }

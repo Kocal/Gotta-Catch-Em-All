@@ -8,7 +8,7 @@
         src="{{ asset('images/pokemon/' ~ pokemon.id ~ '.png') }}"
         alt="{{ pokemon.name }}"
         title="{{ pokemon.name }} #{{ pokemon.id }} ({{ pokemon.getCatchableInGamesLabel() }})"
-        class="select-none {{ caughtPokemons[pokemon.id.toInt] is defined ? '' : 'grayscale-100' }} w-full place-self-center"
+        class="select-none {{ isCaught ? '' : 'grayscale-100' }} w-full place-self-center"
     />
     {% if isLogged %}
 </a>
