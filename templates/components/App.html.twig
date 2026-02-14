@@ -1,9 +1,17 @@
 {% set pokemons = this.getPokemons() %}
 {% set caughtPokemons = this.getCaughtPokemons() %}
 {% set user = app.user %}
-<div{{ attributes }}>
+{% set uncaughtClass = 'grayscale-100' %}
+<div
+    {{ attributes }}
+    {% if user is not null %}
+        data-controller="pokemon"
+        data-pokemon-caught-class=""
+        data-pokemon-uncaught-class="{{ uncaughtClass }}"
+    {% endif %}
+>
     <h1 class="font-mono font-mono-shadow-[2] md:font-mono-shadow-[4] md:text-3xl text-center  font-bold my-6">
-        Gotta Catch 'Em All (3rd Gen) ({{ caughtPokemons|length }} / {{ pokemons|length }})
+        Gotta Catch 'Em All (3rd Gen) (<span data-pokemon-target="counter">{{ caughtPokemons|length }}</span> / {{ pokemons|length }})
     </h1>
     <div class="grid md:grid-cols-5 auto-rows-fr gap-2 gap-y-4">
         {% for boxIndex in 1..boxesCount %}
@@ -14,20 +22,29 @@
                 </twig:block>
                 <twig:block name="content">
                     {% for pokemon in pokemons|slice(pokemonPerBox * (boxIndex - 1), pokemonPerBox) %}
+                        {% set isCaught = caughtPokemons[pokemon.id.toInt] is defined %}
                         {% if user is not null %}
-                            <a
-                                href="{{ path('app_toggle_pokemon_caught', {pokemonId: pokemon.id}) }}"
-                                onclick="this.querySelector('img').classList.toggle('grayscale-100');"
+                            <button
+                                type="button"
+                                data-pokemon-toggle-url="{{ path('app_toggle_pokemon_caught', {pokemonId: pokemon.id}) }}"
+                                data-pokemon-caught="{{ isCaught ? 'true' : 'false' }}"
+                                data-action="click->pokemon#toggle"
+                                class="cursor-pointer"
                             >
-                        {% endif %}
+                                <img
+                                    src="{{ asset('images/pokemon/' ~ pokemon.id ~ '.png') }}"
+                                    alt="{{ pokemon.name }}"
+                                    title="{{ pokemon.name }} #{{ pokemon.id }} ({{ pokemon.getCatchableInGamesLabel() }})"
+                                    class="select-none {{ isCaught ? '' : uncaughtClass }} w-full place-self-center"
+                                />
+                            </button>
+                        {% else %}
                             <img
                                 src="{{ asset('images/pokemon/' ~ pokemon.id ~ '.png') }}"
                                 alt="{{ pokemon.name }}"
                                 title="{{ pokemon.name }} #{{ pokemon.id }} ({{ pokemon.getCatchableInGamesLabel() }})"
-                                class="select-none {{ caughtPokemons[pokemon.id.toInt] is defined ? '' : 'grayscale-100' }} w-full place-self-center"
+                                class="select-none {{ isCaught ? '' : uncaughtClass }} w-full place-self-center"
                             />
-                        {% if user is not null %}
-                            </a>
                         {% endif %}
                     {% endfor %}
                 </twig:block>

@@ -15,5 +15,8 @@ interface UserPokemonRepository
      */
     public function findAllCaughtPokemonsByUserId(UserId $userId): array;
 
-    public function toggleCaught(UserId $userId, PokemonId $pokemonId): void;
+    /**
+     * @return bool true if the Pokemon is now caught, false if it was released
+     */
+    public function toggleCaught(UserId $userId, PokemonId $pokemonId): bool;
 }

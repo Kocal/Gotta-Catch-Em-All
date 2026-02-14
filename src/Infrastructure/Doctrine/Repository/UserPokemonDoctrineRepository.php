@@ -34,7 +34,7 @@ final readonly class UserPokemonDoctrineRepository implements UserPokemonReposit
         return $qb->getQuery()->getResult();
     }
 
-    public function toggleCaught(UserId $userId, PokemonId $pokemonId): void
+    public function toggleCaught(UserId $userId, PokemonId $pokemonId): bool
     {
         $userPokemon = $this->repository->findOneBy([
             'userId' => $userId,
@@ -43,11 +43,15 @@ final readonly class UserPokemonDoctrineRepository implements UserPokemonReposit
 
         if ($userPokemon instanceof UserPokemon) {
             $this->entityManager->remove($userPokemon);
-        } else {
-            $userPokemon = UserPokemon::create($userId, $pokemonId);
-            $this->entityManager->persist($userPokemon);
+            $this->entityManager->flush();
+
+            return false;
         }
 
+        $userPokemon = UserPokemon::create($userId, $pokemonId);
+        $this->entityManager->persist($userPokemon);
         $this->entityManager->flush();
+
+        return true;
     }
 }
