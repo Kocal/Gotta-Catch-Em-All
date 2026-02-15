@@ -4,15 +4,66 @@
 {% set uncaughtClass = 'grayscale-100' %}
 <div
     {{ attributes }}
+    data-controller="search-highlight{% if user is not null %} pokemon{% endif %}"
+    data-search-highlight-highlight-class="bg-orange-400"
+    data-search-highlight-current-class="bg-red-500"
     {% if user is not null %}
-        data-controller="pokemon"
         data-pokemon-caught-class=""
         data-pokemon-uncaught-class="{{ uncaughtClass }}"
     {% endif %}
 >
-    <h1 class="font-mono font-mono-shadow-[2] md:font-mono-shadow-[4] md:text-3xl text-center  font-bold my-6">
-        Gotta Catch 'Em All (3rd Gen) (<span data-pokemon-target="counter">{{ caughtPokemons|length }}</span> / {{ pokemons|length }})
-    </h1>
+    {# Search box - hidden by default, shown with Ctrl+F #}
+    <div
+        data-search-highlight-target="searchBox"
+        class="hidden fixed top-4 right-4 z-50 bg-white rounded-lg shadow-lg border border-gray-300 p-2 flex items-center gap-2"
+    >
+        <input
+            type="text"
+            data-search-highlight-target="input"
+            data-action="input->search-highlight#search keydown->search-highlight#handleKeydown"
+            placeholder="Rechercher un Pokémon..."
+            class="px-3 py-1.5 text-sm text-gray-900 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+        />
+        <span data-search-highlight-target="count" class="text-sm text-gray-600 min-w-[60px]">0 / 0</span>
+        <button
+            type="button"
+            data-action="click->search-highlight#previous"
+            class="p-1 hover:bg-gray-100 text-gray-700 rounded"
+            title="Précédent (Shift+Enter)"
+        >
+            <twig:ux:icon name="lucide:chevron-up" />
+        </button>
+        <button
+            type="button"
+            data-action="click->search-highlight#next"
+            class="p-1 hover:bg-gray-100 text-gray-700 rounded"
+            title="Suivant (Enter)"
+        >
+            <twig:ux:icon name="lucide:chevron-down" />
+        </button>
+        <button
+            type="button"
+            data-action="click->search-highlight#close"
+            class="p-1 hover:bg-gray-100 text-gray-700 rounded"
+            title="Fermer (Echap)"
+        >
+            <twig:ux:icon name="lucide:x" />
+        </button>
+    </div>
+
+    <div class="flex items-center justify-center gap-3 my-6">
+        <h1 class="font-mono font-mono-shadow-[2] md:font-mono-shadow-[4] md:text-3xl text-center font-bold">
+            Gotta Catch 'Em All (3rd Gen) (<span data-pokemon-target="counter">{{ caughtPokemons|length }}</span> / {{ pokemons|length }})
+        </h1>
+        <button
+            type="button"
+            data-action="click->search-highlight#open"
+            class="p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-md cursor-pointer"
+            title="Rechercher (Ctrl+F)"
+        >
+            <twig:ux:icon name="lucide:search" />
+        </button>
+    </div>
     <div class="grid md:grid-cols-5 auto-rows-fr gap-2 gap-y-4">
         {% for boxIndex in 1..boxesCount %}
             <twig:PokemonBox>
@@ -37,14 +88,18 @@
                                     title="{{ pokemon.name }} #{{ pokemon.id }} ({{ pokemon.getCatchableInGamesLabel() }})"
                                     class="select-none {{ isCaught ? '' : uncaughtClass }} w-full place-self-center"
                                 />
+                                <span class="sr-only">{{ pokemon.name }}</span>
                             </button>
                         {% else %}
-                            <img
-                                src="{{ asset('images/pokemon/' ~ pokemon.id ~ '.png') }}"
-                                alt="{{ pokemon.name }}"
-                                title="{{ pokemon.name }} #{{ pokemon.id }} ({{ pokemon.getCatchableInGamesLabel() }})"
-                                class="select-none {{ isCaught ? '' : uncaughtClass }} w-full place-self-center"
-                            />
+                            <span class="relative">
+                                <img
+                                    src="{{ asset('images/pokemon/' ~ pokemon.id ~ '.png') }}"
+                                    alt="{{ pokemon.name }}"
+                                    title="{{ pokemon.name }} #{{ pokemon.id }} ({{ pokemon.getCatchableInGamesLabel() }})"
+                                    class="select-none {{ isCaught ? '' : uncaughtClass }} w-full place-self-center"
+                                />
+                                <span class="sr-only">{{ pokemon.name }}</span>
+                            </span>
                         {% endif %}
                     {% endfor %}
                 </twig:block>
