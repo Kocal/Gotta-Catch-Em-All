@@ -1,0 +1,130 @@
+// Service Worker for offline support
+// Generated at: {{ generated_at|date('Y-m-d H:i:s T')|raw }}
+// Version: {{ cache_version }}
+
+const CACHE_NAME = 'gotta-catch-em-all-{{ cache_version }}';
+
+// Assets to pre-cache on install
+const PRECACHE_ASSETS = {{ precache_assets|json_encode(constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_SLASHES'))|raw }};
+
+// Install event - pre-cache all assets
+self.addEventListener('install', (event) => {
+  console.log('[Service Worker] Installing version {{ cache_version }}...');
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(async (cache) => {
+      console.log('[Service Worker] Pre-caching', PRECACHE_ASSETS.length, 'assets');
+
+      // Cache assets in batches to avoid overwhelming the browser
+      const batchSize = 20;
+      for (let i = 0; i < PRECACHE_ASSETS.length; i += batchSize) {
+        const batch = PRECACHE_ASSETS.slice(i, i + batchSize);
+        await Promise.all(
+          batch.map(async (url) => {
+            try {
+              const response = await fetch(url);
+              if (response.ok) {
+                await cache.put(url, response);
+              }
+            } catch (error) {
+              console.warn('[Service Worker] Failed to cache:', url, error);
+            }
+          })
+        );
+      }
+
+      console.log('[Service Worker] Pre-caching complete');
+    })
+  );
+  // Activate immediately
+  self.skipWaiting();
+});
+
+// Activate event - clean up old caches
+self.addEventListener('activate', (event) => {
+  console.log('[Service Worker] Activating version {{ cache_version }}...');
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames
+          .filter((name) => name.startsWith('gotta-catch-em-all-') && name !== CACHE_NAME)
+          .map((name) => {
+            console.log('[Service Worker] Deleting old cache:', name);
+            return caches.delete(name);
+          })
+      );
+    })
+  );
+  // Take control of all pages immediately
+  self.clients.claim();
+});
+
+// Fetch event - serve from cache, fallback to network
+self.addEventListener('fetch', (event) => {
+  const { request } = event;
+  const url = new URL(request.url);
+
+  // Only handle same-origin requests
+  if (url.origin !== location.origin) {
+    return;
+  }
+
+  // Skip non-GET requests
+  if (request.method !== 'GET') {
+    return;
+  }
+
+  // Strategy: Network first for HTML, Cache first for assets
+  if (request.headers.get('Accept')?.includes('text/html')) {
+    // Network first for HTML pages
+    event.respondWith(networkFirstStrategy(request));
+  } else {
+    // Cache first for assets (JS, CSS, images, fonts)
+    event.respondWith(cacheFirstStrategy(request));
+  }
+});
+
+// Network first strategy - try network, fallback to cache
+async function networkFirstStrategy(request) {
+  try {
+    const networkResponse = await fetch(request);
+    // Cache the response for future offline use
+    if (networkResponse.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, networkResponse.clone());
+    }
+    return networkResponse;
+  } catch (error) {
+    console.log('[Service Worker] Network failed, serving from cache:', request.url);
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    // If no cache and network fails, return cached home page
+    return caches.match('/');
+  }
+}
+
+// Cache first strategy - try cache, fallback to network
+async function cacheFirstStrategy(request) {
+  const cachedResponse = await caches.match(request);
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+
+  try {
+    const networkResponse = await fetch(request);
+    // Cache the response for future use
+    if (networkResponse.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, networkResponse.clone());
+    }
+    return networkResponse;
+  } catch (error) {
+    console.log('[Service Worker] Failed to fetch:', request.url);
+    // Return a placeholder for images if offline
+    if (request.url.match(/\.(png|jpg|jpeg|gif|svg|webp)$/)) {
+      return new Response('', { status: 404, statusText: 'Not Found' });
+    }
+    throw error;
+  }
+}
